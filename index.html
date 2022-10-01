@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="css/fontello.css">
+    <title>Captcha </title>
+</head>
+
+<body>
+
+    <main>
+        <section>
+            <div class="top-head">
+                <h1>Captcha</h1>
+            </div>
+            <div class="mid-head">
+                <div class="captcha"></div>
+                <div class="btn"><i id="arrow" class=" icon-cw"></i></div>
+            </div>
+            <div class="bottom-head">
+                <input type="text" placeholder="Enter Captcha">
+
+                <div class="check">Check</div>
+            </div>
+
+            <h2 id="text"></h2>
+        </section>
+    </main>
+
+
+    <script>
+        let input = document.getElementsByTagName('input')[0]
+        let check = document.getElementsByClassName('check')[0]
+        let captcha = document.getElementsByClassName('captcha')[0]
+        let btn = document.getElementsByClassName('btn')[0]
+        let text = document.getElementById('text')
+        let arrow = document.getElementById('arrow')
+        let lastnum = ''
+        let val
+
+        let word = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
+            'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd',
+            'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
+            't', 'u', 'v', 'w', 'x', 'y', 'z'
+        ]
+
+        let num = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+
+        rand()
+
+
+
+        function rand() {
+
+
+            for (i = 0; i < 2; i++) {
+                let x = word[parseInt((Math.random()) * word.length)]
+                let y = num[parseInt((Math.random() * num.length))]
+                let z = word[parseInt((Math.random()) * word.length)]
+
+                captcha.innerHTML += x + y + z
+
+                val = captcha.innerHTML
+            }
+
+        }
+
+
+        function turn(){
+            arrow.style.transform='rotate(360deg)'
+
+        }
+        function backturn(){
+            arrow.style.transform=''
+
+        }
+
+
+
+        btn.addEventListener('click', function () {
+            captcha.innerHTML = ''
+
+            rand()
+            text.innerHTML = ''
+            turn()
+            setTimeout(backturn,300)
+            
+
+        
+
+        })
+
+        function time(){
+            text.innerHTML=""
+        }
+
+        check.addEventListener('click', function () {
+
+            if (val == input.value) {
+                text.innerHTML = 'Nice! You dont appear to be a robot.'
+                input.value = ''
+                captcha.innerHTML = ''
+                check.style.display = 'none'
+                setTimeout(time,3000)
+
+                rand()
+                
+                
+
+            } else {
+                text.innerHTML = 'Captcha not matched. Please try again!'
+                input.value = ''
+                setTimeout(time,3000)
+            }
+
+        })
+
+        input.addEventListener('focusin', function () {
+
+            check.style.display = 'flex'
+
+        })
+
+    </script>
+
+</body>
+
+</html>
